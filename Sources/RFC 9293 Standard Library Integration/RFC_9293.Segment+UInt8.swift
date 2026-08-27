@@ -1,4 +1,4 @@
-internal import Byte_Primitives
+internal import Byte
 public import RFC_9293
 
 extension RFC_9293.Segment {

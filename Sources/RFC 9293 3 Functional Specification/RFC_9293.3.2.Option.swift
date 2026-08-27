@@ -1,4 +1,4 @@
-public import Binary_Serializable_Primitives
+public import Binary_Serializable
 import Standard_Library_Extensions
 
 extension RFC_9293.`3`.`2` {

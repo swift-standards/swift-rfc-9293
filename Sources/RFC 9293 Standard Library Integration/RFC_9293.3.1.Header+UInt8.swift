@@ -1,4 +1,4 @@
-internal import Byte_Primitives
+internal import Byte
 public import RFC_9293_3_Functional_Specification
 public import RFC_9293_Shared
 

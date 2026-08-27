@@ -16,19 +16,19 @@ extension Target.Dependency {
         name: "Standard Library Extensions",
         package: "swift-standard-library-extensions"
     )
-    static let binary = Self.product(name: "Binary Primitives", package: "swift-binary-primitives")
+    static let binary = Self.product(name: "Binary", package: "swift-binary")
     static let binarySerializable = Self.product(
-        name: "Binary Serializable Primitives",
-        package: "swift-binary-serializer-primitives"
+        name: "Binary Serializable",
+        package: "swift-binary-serializer"
     )
     static let incits41986 = Self.product(
-        name: "ASCII Primitives",
-        package: "swift-ascii-primitives"
+        name: "ASCII",
+        package: "swift-ascii"
     )
     static let rfc791 = Self.product(name: "RFC 791", package: "swift-rfc-791")
     static let bytePrimitivesSLI = Self.product(
-        name: "Byte Primitives Standard Library Integration",
-        package: "swift-byte-primitives"
+        name: "Byte Standard Library Integration",
+        package: "swift-byte"
     )
 }
 
@@ -54,23 +54,23 @@ let package = Package(
     ],
     dependencies: [
         .package(
-            url: "https://github.com/swift-primitives/swift-standard-library-extensions.git",
+            url: "https://github.com/swift-molecules/swift-standard-library-extensions.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-binary-serializer-primitives.git",
+            url: "https://github.com/swift-molecules/swift-binary-serializer.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-byte-primitives.git",
+            url: "https://github.com/swift-molecules/swift-byte.git",
             branch: "main"
         ),
         .package(
-            url: "https://github.com/swift-primitives/swift-ascii-primitives.git",
+            url: "https://github.com/swift-molecules/swift-ascii.git",
             branch: "main"
         ),
         .package(url: "https://github.com/swift-ietf/swift-rfc-791.git", branch: "main"),
