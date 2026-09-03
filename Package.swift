@@ -1,37 +1,6 @@
 // swift-tools-version: 6.4
 import PackageDescription
 
-extension String {
-    static let rfc9293 = "RFC 9293"
-    static let rfc9293Shared = "RFC 9293 Shared"
-    static let rfc9293Section3 = "RFC 9293 3 Functional Specification"
-    static let rfc9293SLI = "RFC 9293 Standard Library Integration"
-}
-
-extension Target.Dependency {
-    static let rfc9293 = Self.target(name: .rfc9293)
-    static let rfc9293Shared = Self.target(name: .rfc9293Shared)
-    static let rfc9293Section3 = Self.target(name: .rfc9293Section3)
-    static let standards = Self.product(
-        name: "Standard Library Extensions",
-        package: "swift-standard-library-extensions"
-    )
-    static let binary = Self.product(name: "Binary", package: "swift-binary")
-    static let binarySerializable = Self.product(
-        name: "Binary Serializable",
-        package: "swift-binary-serializer"
-    )
-    static let incits41986 = Self.product(
-        name: "ASCII",
-        package: "swift-ascii"
-    )
-    static let rfc791 = Self.product(name: "RFC 791", package: "swift-rfc-791")
-    static let bytePrimitivesSLI = Self.product(
-        name: "Byte Standard Library Integration",
-        package: "swift-byte"
-    )
-}
-
 let package = Package(
     name: "swift-rfc-9293",
     platforms: [
@@ -79,45 +48,41 @@ let package = Package(
 
         .target(
             name: "RFC 9293 Shared",
-            dependencies: [.standards, .binary, .binarySerializable]
+            dependencies: [.product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"), .product(name: "Binary", package: "swift-binary"), .product(name: "Binary Serializable", package: "swift-binary-serializer")]
         ),
 
         .target(
             name: "RFC 9293 3 Functional Specification",
-            dependencies: [.rfc9293Shared, .standards, .incits41986, .binarySerializable]
+            dependencies: [.target(name: "RFC 9293 Shared"), .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"), .product(name: "ASCII", package: "swift-ascii"), .product(name: "Binary Serializable", package: "swift-binary-serializer")]
         ),
 
         .target(
             name: "RFC 9293",
             dependencies: [
-                .rfc9293Shared, .rfc9293Section3, .standards, .rfc791, .binarySerializable,
+                .target(name: "RFC 9293 Shared"), .target(name: "RFC 9293 3 Functional Specification"), .product(name: "Standard Library Extensions", package: "swift-standard-library-extensions"), .product(name: "RFC 791", package: "swift-rfc-791"), .product(name: "Binary Serializable", package: "swift-binary-serializer"),
             ]
         ),
 
         .target(
             name: "RFC 9293 Standard Library Integration",
-            dependencies: [.rfc9293, .rfc9293Section3, .bytePrimitivesSLI]
+            dependencies: [.target(name: "RFC 9293"), .target(name: "RFC 9293 3 Functional Specification"), .product(name: "Byte Standard Library Integration", package: "swift-byte")]
         ),
         .testTarget(
             name: "RFC 9293 Tests",
             dependencies: [
-                "RFC 9293"
+                .target(name: "RFC 9293")
             ]
         ),
         .testTarget(
             name: "RFC 9293 Standard Library Integration Tests",
             dependencies: [
-                "RFC 9293",
-                "RFC 9293 Standard Library Integration",
+                .target(name: "RFC 9293"),
+                .target(name: "RFC 9293 Standard Library Integration"),
             ]
         ),
     ],
     swiftLanguageModes: [.v6]
 )
-
-extension String {
-    var tests: Self { self + " Tests" }
-}
 
 for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     let ecosystem: [SwiftSetting] = [
